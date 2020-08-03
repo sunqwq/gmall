@@ -1,0 +1,45 @@
+server:
+  port: 18082
+spring:
+  cloud:
+    nacos:
+      discovery:
+        server-addr: localhost:8848
+    sentinel:
+      transport:
+        dashboard: localhost:8080
+        port: 8719  #\u4EA4\u4E92\u7AEF\u53E3\u53F7
+  zipkin:
+    base-url: localhost:9411  # zipkin \u94FE\u8DEF\u8FFD\u8E2A\u5DE5\u5177 \u670D\u52A1\u5730\u5740
+    sender:
+      type: web  #\u4EA4\u4E92\u65B9\u5F0F
+    discovery-client-enabled: false #\u4E0D\u8FFD\u8E2A\u81EA\u5DF1\u7684\u8BF7\u6C42
+  sleuth:
+    sampler:
+      probability: 1  #sleuth \u91C7\u96C6\u7387 1\u4EE3\u8868\u767E\u5206\u767E
+  # mysql\u6570\u636E\u5E93\u548Credis\u6570\u636E\u5E93
+  datasource:
+    driver-class-name: com.mysql.jdbc.Driver
+    url: jdbc:mysql://192.168.80.130:3306/guli_sms
+    username: root
+    password: 123456
+  redis:
+    host: 192.168.80.130
+
+feign:
+  sentinel:
+    enabled: true  #\u542F\u7528feign\u7684 sentinel
+#dao\u5C42\u7F16\u8BD1\u540E\u53EA\u6709class\u6587\u4EF6\uFF0C\u6CA1\u6709mapper.xml\uFF0C
+#\u56E0\u4E3Amaven\u5DE5\u7A0B\u5728\u9ED8\u8BA4\u60C5\u51B5\u4E0Bsrc/main/java\u76EE\u5F55\u4E0B\u7684\u6240\u6709\u8D44\u6E90\u6587\u4EF6\u662F\u4E0D\u53D1\u5E03\u5230target\u76EE\u5F55\u4E0B\u7684
+#\u89E3\u51B3\u65B9\u6CD5:  \u8BA9maven\u9ED8\u8BA4\u52A0\u8F7Dxml\u6587\u4EF6
+# 1.\u5728pom.xml\u8FDB\u884C\u914D\u7F6E
+# 2.\u5728application.properties\u8FDB\u884C\u914D\u7F6E
+#\u914D\u7F6Emapper xml\u6587\u4EF6\u7684\u8DEF\u5F84
+mybatis-plus:
+  mapper-locations: classpath:mapper/sms/**/*.xml
+  # \u7C7B\u578B\u522B\u540D
+  type-aliases-package: com.atguigu.gmall.sms.entity
+  #\u5168\u5C40id\u7B56\u7565
+  global-config:
+    db-config:
+      id-type: auto

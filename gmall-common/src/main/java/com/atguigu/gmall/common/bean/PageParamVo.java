@@ -13,6 +13,7 @@ import java.util.Map;
 /**
  * 分页查询参数
  */
+
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
