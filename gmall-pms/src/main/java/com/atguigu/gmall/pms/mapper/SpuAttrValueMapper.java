@@ -4,6 +4,8 @@ import com.atguigu.gmall.pms.entity.SpuAttrValueEntity;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import org.apache.ibatis.annotations.Mapper;
 
+import java.util.List;
+
 /**
  * spu属性值
  * 
@@ -13,5 +15,8 @@ import org.apache.ibatis.annotations.Mapper;
  */
 @Mapper
 public interface SpuAttrValueMapper extends BaseMapper<SpuAttrValueEntity> {
-	
+
+    // 1.根据spuId查询检索属性及值
+    List<SpuAttrValueEntity> querySearchAttrValueBySpuId(Long spuId);
+
 }

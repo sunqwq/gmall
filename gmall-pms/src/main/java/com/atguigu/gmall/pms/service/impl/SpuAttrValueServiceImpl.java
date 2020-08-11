@@ -1,6 +1,8 @@
 package com.atguigu.gmall.pms.service.impl;
 
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 import java.util.Map;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
@@ -24,6 +26,12 @@ public class SpuAttrValueServiceImpl extends ServiceImpl<SpuAttrValueMapper, Spu
         );
 
         return new PageResultVo(page);
+    }
+
+    // 1.根据spuId查询检索属性及值
+    @Override
+    public List<SpuAttrValueEntity> querySearchAttrValueBySpuId(Long spuId) {
+        return this.baseMapper.querySearchAttrValueBySpuId(spuId);
     }
 
 }

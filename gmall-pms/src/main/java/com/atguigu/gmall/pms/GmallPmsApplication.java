@@ -13,7 +13,7 @@ import springfox.documentation.swagger2.annotations.EnableSwagger2;
 @EnableFeignClients
 @SpringBootApplication
 @MapperScan("com.atguigu.gmall.pms.mapper")
-@RefreshScope //读取nacos配置中心的配置
+@RefreshScope //刷新读取nacos配置中心的配置
 public class GmallPmsApplication {
     public static void main(String[] args) {
         SpringApplication.run(GmallPmsApplication.class,args);

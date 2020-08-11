@@ -2,6 +2,7 @@ package com.atguigu.gmall.pms.controller;
 
 import java.util.List;
 
+import com.atguigu.gmall.pms.vo.SpuVo;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -34,6 +35,30 @@ public class SpuController {
     @Autowired
     private SpuService spuService;
 
+
+    /**
+     * 按照分类id分页查询商品列表
+     */
+    @GetMapping("category/{categoryId}")
+    public ResponseVo<PageResultVo> querySpuByPageByCid(
+            @PathVariable("categoryId") Long cid,
+            PageParamVo pageParamVo) {
+
+        PageResultVo pageResultVo = spuService.querySpuByPageByCid(cid,pageParamVo);
+        return ResponseVo.ok(pageResultVo);
+    }
+
+    /**
+     * 查询数据导入es
+     */
+    @PostMapping("json")
+    @ApiOperation("分页查询数据导入es")
+    public ResponseVo<List<SpuEntity>> querySpuByPageJson(@RequestBody PageParamVo paramVo){
+        PageResultVo pageResultVo = spuService.queryPage(paramVo);
+
+        return ResponseVo.ok((List<SpuEntity>)pageResultVo.getList());
+    }
+
     /**
      * 列表
      */
@@ -58,13 +83,13 @@ public class SpuController {
     }
 
     /**
-     * 保存
+     * 大保存
      */
     @PostMapping
     @ApiOperation("保存")
-    public ResponseVo<Object> save(@RequestBody SpuEntity spu){
-		spuService.save(spu);
-
+    public ResponseVo<Object> save(@RequestBody SpuVo spuVo){
+//		spuService.save(spu);
+        this.spuService.bigSave(spuVo);
         return ResponseVo.ok();
     }
 

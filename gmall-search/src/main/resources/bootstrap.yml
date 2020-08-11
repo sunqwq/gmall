@@ -1,0 +1,10 @@
+spring:
+  application:
+    name: search-service
+  cloud:
+    nacos:
+      config:
+        server-addr: localhost:8848  #nacos 配置中心地址
+#        namespace: cc4851e7-951f-45cb-96fe-64f054d9ad41   #nacos 命名空间id
+#        group: dev  # 组名
+#        file-extension: yml   #扩展名

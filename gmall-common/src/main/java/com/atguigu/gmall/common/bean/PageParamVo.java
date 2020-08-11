@@ -28,6 +28,9 @@ public class PageParamVo {
     // 查询条件
     private String key;
 
+    /*
+    IPage  是mybatis-plus 需要的分页对象
+     */
     public <T> IPage<T> getPage(){
 
         return new Page<>(pageNum, pageSize);

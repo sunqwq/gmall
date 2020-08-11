@@ -1,0 +1,10 @@
+spring:
+  application:
+    name: wms-service
+  cloud:
+    nacos:
+      config:
+        server-addr: localhost:8848  #nacos 服务地址
+        namespace: 32ee4a4e-c621-4d9d-bc61-d2dca0b1f0b1  #nacos 命名空间id
+        group: dev  #分组
+        file-extension: yml  # 扩展名

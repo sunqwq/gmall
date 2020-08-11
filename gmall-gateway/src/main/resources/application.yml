@@ -6,25 +6,39 @@ spring:
       discovery:
         server-addr: localhost:8848
     gateway:
-      routes:          #\u540D\u5B57\u7279\u610F\u4E0D\u4E00\u6837 \u4EE5\u4F5C\u533A\u5206
-        - id: pms-route   #\u4EE3\u8868pms\u7684\u8DEF\u7531
-          uri: lb://pms-service   #\u4EE3\u8868pms\u7684\u670D\u52A1
+      routes:
+        - id: pms-route  # 商品管理路由
+          uri: lb://pms-service
           predicates:
-            - Path=/pms/**    #\u65AD\u8A00 \u8DEF\u5F84\u5339\u914D
-        - id: sms-route   #\u4EE3\u8868pms\u7684\u8DEF\u7531
-          uri: lb://sms-service   #\u4EE3\u8868pms\u7684\u670D\u52A1
+            - Path=/pms/**
+        - id: sms-route   # 营销管理路由
+          uri: lb://sms-service
           predicates:
-            - Path=/sms/**    #\u65AD\u8A00 \u8DEF\u5F84\u5339\u914D
-        - id: oms-route
+            - Path=/sms/**
+        - id: oms-route   # 订单管理路由
           uri: lb://oms-service
           predicates:
             - Path=/oms/**
-        - id: ums-route
+        - id: ums-route   # 用户管理路由
           uri: lb://ums-service
           predicates:
             - Path=/ums/**
-        - id: wms-route
+        - id: wms-route   # 仓库库存管理路由
           uri: lb://wms-service
           predicates:
             - Path=/wms/**
+        - id: search-route   #搜素 路由
+          uri: lb://search-service
+          predicates:
+            - Host=search.gmall.com
+
+
+
+#\u540D\u5B57\u7279\u610F\u4E0D\u4E00\u6837 \u4EE5\u4F5C\u533A\u5206
+#\u4EE3\u8868pms\u7684\u8DEF\u7531
+#\u4EE3\u8868pms\u7684\u670D\u52A1
+#\u65AD\u8A00 \u8DEF\u5F84\u5339\u914D
+#\u4EE3\u8868pms\u7684\u8DEF\u7531
+#\u4EE3\u8868pms\u7684\u670D\u52A1
+#\u65AD\u8A00 \u8DEF\u5F84\u5339\u914D
 

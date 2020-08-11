@@ -1,7 +1,7 @@
 server:
   port: 18081
 
-#中间的配置信息  通过@RefreshScope 读取nacos配置中心
+#中间的配置信息  通过@RefreshScope 刷新读取nacos配置中心
 
 feign:
   sentinel:
@@ -20,3 +20,9 @@ mybatis-plus:
   global-config:
     db-config:
       id-type: auto
+# 配置seata 分布式事务框架
+spring:
+  cloud:
+    alibaba:
+      seata:
+        tx-service-group: pms-service-fescar-service-group  #需要和file.conf中对应
