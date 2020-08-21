@@ -36,7 +36,7 @@ public class WareSkuController {
     private WareSkuService wareSkuService;
 
     /**
-     *  1.获取某个sku的库存信息
+     *  1.根据skuId查询库存信息wms
      */
     @GetMapping("sku/{skuId}")
     @ApiOperation("获取某个sku的库存信息")

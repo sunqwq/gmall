@@ -110,7 +110,7 @@ class GmallSearchApplicationTests {
                        List<WareSkuEntity> wareSkuEntities = wareResponseVo.getData();
                        if (!CollectionUtils.isEmpty(wareSkuEntities)) {
                            // 获取里面的销量 进行相加
-                           goods.setSale(wareSkuEntities.stream().map(WareSkuEntity::getSales).reduce((a,b)->(a+b)).get().intValue());
+                           goods.setSales(wareSkuEntities.stream().map(WareSkuEntity::getSales).reduce((a,b)->(a+b)).get().intValue());
                            goods.setStore(wareSkuEntities.stream().anyMatch(wareSkuEntity -> wareSkuEntity.getStock() - wareSkuEntity.getStockLocked() > 0));
                        }
 

@@ -37,6 +37,17 @@
             <version>0.0.1-SNAPSHOT</version>
         </dependency>
 
+        <!--引入 thymeleaf依赖-->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-thymeleaf</artifactId>
+        </dependency>
+<!--        消息中间件  rabbitMQ-->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-amqp</artifactId>
+        </dependency>
+
         <!--引入elasticsearch 并排除自带的高版本客户端 -->
         <dependency>
             <groupId>org.springframework.boot</groupId>

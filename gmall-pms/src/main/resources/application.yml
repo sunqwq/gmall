@@ -26,3 +26,15 @@ spring:
     alibaba:
       seata:
         tx-service-group: pms-service-fescar-service-group  #需要和file.conf中对应
+#rabbitMQ   => 生产者
+  rabbitmq:
+    host: 192.168.80.130
+    virtual-host: /feng
+    username: admin
+    password: admin
+    publisher-confirm-type: correlated   #异步
+    publisher-returns: true
+#确认消息是否到达交换机:simple是同步方式生产者确认(阻塞) correlated异步确认
+#确认消息是否到达队列
+
+

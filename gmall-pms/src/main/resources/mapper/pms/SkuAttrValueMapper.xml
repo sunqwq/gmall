@@ -15,4 +15,13 @@
         on a.attr_id = p.id
         where a.sku_id = #{skuId} and p.search_type = 1
     </select>
+
+<!--    根据spuId查询spu下所有sku的销售属性attr_value与skuId之间的映射关系-->
+<!--    {'8G,128G,暗夜黑':100,'8G,128G,天空白':101}-->
+    <select id="querySaleAttrMappingSkuIdBySpuId" resultType="java.util.Map">
+        SELECT a.`sku_id`,GROUP_CONCAT(a.`attr_value`) AS attr_values
+        FROM pms_sku_attr_value a
+        INNER JOIN pms_sku s ON a.`sku_id`=s.`id`
+        WHERE s.`spu_id`=#{spuId} GROUP BY a.`sku_id`
+    </select>
 </mapper>

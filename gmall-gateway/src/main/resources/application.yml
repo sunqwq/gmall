@@ -30,8 +30,19 @@ spring:
         - id: search-route   #搜素 路由
           uri: lb://search-service
           predicates:
-            - Host=search.gmall.com
-
+            - Host=search.gmall.com  #- Path=/search/**
+        - id: index-route
+          uri: lb://index-service
+          predicates:
+            - Host=www.gmall.com,gmall.com
+        - id: index-route2
+          uri: lb://index-service
+          predicates:
+            - Path=/index/**
+        - id: item-route
+          uri: lb://item-service
+          predicates:
+            - Host=item.gmall.com
 
 
 #\u540D\u5B57\u7279\u610F\u4E0D\u4E00\u6837 \u4EE5\u4F5C\u533A\u5206
@@ -41,4 +52,5 @@ spring:
 #\u4EE3\u8868pms\u7684\u8DEF\u7531
 #\u4EE3\u8868pms\u7684\u670D\u52A1
 #\u65AD\u8A00 \u8DEF\u5F84\u5339\u914D
+#item-service
 

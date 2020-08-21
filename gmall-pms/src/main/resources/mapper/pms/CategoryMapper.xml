@@ -1,5 +1,19 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.atguigu.gmall.pms.mapper.CategoryMapper">
-
+<!--    查询二级分类 携带三级分类
+     collection标签可以把一次性查询回来的数据都封装为集合对象
+    association标签专门用来映射复杂的子对象的属性
+        property表示集合(子对象)的属性名
+        javaType表示对象的具体类型
+        select属性表示调用哪个select查询
+        column表示将结果集中哪个列做为参数给调用的select使用
+        -->
+    <resultMap id="queryCategoryEntityMap" type="com.atguigu.gmall.pms.entity.CategoryEntity" autoMapping="true">
+        <id property="id" column="id"></id>
+        <collection property="subs" javaType="List" ofType="com.atguigu.gmall.pms.entity.CategoryEntity" select="queryCategoriesWithSubByPid" column="id"></collection>
+    </resultMap>
+    <select id="queryCategoriesWithSubByPid" resultMap="queryCategoryEntityMap">
+        select * from pms_category where parent_id = #{pid}
+    </select>
 </mapper>

@@ -46,7 +46,7 @@ public class Goods {
 
     //排序过滤字段
     @Field(type = FieldType.Integer)
-    private Integer sale;  //销量
+    private Integer sales;  //销量
     @Field(type = FieldType.Date)
     private Date createTime;  //新品排序
     @Field(type = FieldType.Boolean)

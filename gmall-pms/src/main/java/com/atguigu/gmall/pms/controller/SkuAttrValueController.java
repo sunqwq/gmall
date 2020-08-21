@@ -2,6 +2,7 @@ package com.atguigu.gmall.pms.controller;
 
 import java.util.List;
 
+import com.atguigu.gmall.pms.vo.SaleAttrValueVo;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,6 +20,8 @@ import com.atguigu.gmall.common.bean.PageResultVo;
 import com.atguigu.gmall.common.bean.ResponseVo;
 import com.atguigu.gmall.common.bean.PageParamVo;
 
+import javax.ws.rs.GET;
+
 /**
  * sku销售属性&值
  *
@@ -33,6 +36,34 @@ public class SkuAttrValueController {
 
     @Autowired
     private SkuAttrValueService skuAttrValueService;
+
+    /**
+     * 根据spuId查询spu下所有sku的销售属性attr_value与skuId之间的映射关系
+     * {'8G,128G,暗夜黑':100,'8G,128G,天空白':101}
+     */
+    @GetMapping("sku/spu/{spuId}")
+    public ResponseVo<String> querySaleAttrMappingSkuIdBySpuId(@PathVariable("spuId") Long spuId) {
+        String skusJson = this.skuAttrValueService.querySaleAttrMappingSkuIdBySpuId(spuId);
+        return ResponseVo.ok(skusJson);
+    }
+
+    /**
+     * 根据skuId查询当前sku的销售属性集合(颜色,内存,存储)
+     */
+    @GetMapping("sku/{skuId}")
+    public ResponseVo<List<SkuAttrValueEntity>> querySaleAttrValueBySkuId(@PathVariable("skuId") Long skuId) {
+        List<SkuAttrValueEntity> skuAttrValueEntities = this.skuAttrValueService.querySaleAttrValueBySkuId(skuId);
+        return ResponseVo.ok(skuAttrValueEntities);
+    }
+
+    /**
+     * 根据spuId查询spu下所有销售属性的可选值pms_sku_attr_value(颜色,内存,存储)
+     */
+    @GetMapping("spu/{spuId}")
+    public ResponseVo<List<SaleAttrValueVo>> queryAllSaleAttrValueBySpuId(@PathVariable("spuId") Long spuId) {
+        List<SaleAttrValueVo> saleAttrValueVos = this.skuAttrValueService.queryAllSaleAttrValueBySpuId(spuId);
+        return ResponseVo.ok(saleAttrValueVos);
+    }
 
     /**
      * 根据skuId查询检索属性及值

@@ -47,7 +47,7 @@ public class SpuDescController {
 
 
     /**
-     * 信息
+     * 根据spuId查询spu的描述信息(pms_spu_desc)
      */
     @GetMapping("{spuId}")
     @ApiOperation("详情查询")

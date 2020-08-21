@@ -3,6 +3,7 @@ package com.atguigu.gmall.pms.controller;
 import java.util.List;
 
 import com.atguigu.gmall.pms.vo.AttrGroupVo;
+import com.atguigu.gmall.pms.vo.ItemGroupVo;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.sun.org.apache.regexp.internal.RE;
 import io.swagger.annotations.Api;
@@ -36,6 +37,17 @@ public class AttrGroupController {
 
     @Autowired
     private AttrGroupService attrGroupService;
+
+    /**
+     * 根据分类id结合spuId或者skuId查询组及组下规格参数与值
+     */
+    @GetMapping("withattr/withvalue/{cid}")
+    public ResponseVo<List<ItemGroupVo>> queryGroupWithAttrValue(@PathVariable("cid") Long cid,
+                                                                @RequestParam("spuId") Long spuId,
+                                                                @RequestParam("skuId") Long skuId) {
+        List<ItemGroupVo> itemGroupVos = this.attrGroupService.queryGroupWithAttrValue(cid, spuId, skuId);
+        return ResponseVo.ok(itemGroupVos);
+    }
 
     /**
      * 2.查询分类下的组及规格参数

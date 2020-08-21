@@ -1,10 +1,12 @@
 package com.atguigu.gmall.pms.entity;
 
+import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 import lombok.Data;
 
 import java.io.Serializable;
+import java.util.List;
 
 /**
  * 商品三级分类
@@ -48,4 +50,11 @@ public class CategoryEntity implements Serializable {
 	 */
 	private String unit;
 
+	/**
+	 * 增加的三级分类字段, 添加备注指明不存在,不然数据库没有会报错
+	 *      exist是否为数据库表字段
+	 *      默认 true 存在，false 不存在
+	 */
+	@TableField(exist = false)
+	private List<CategoryEntity> subs;
 }

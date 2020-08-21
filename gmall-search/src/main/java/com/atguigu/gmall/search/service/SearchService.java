@@ -69,7 +69,7 @@ public class SearchService {
             responseVo.setPageNum(paramVo.getPageNum());
             responseVo.setPageSize(paramVo.getPageSize());
             return responseVo;
-        } catch (IOException e) {
+        } catch (Exception e) {
             e.printStackTrace();
         }
         return null;
@@ -346,7 +346,7 @@ public class SearchService {
 
                     return responseAttrVo;
                 }).collect(Collectors.toList());
-                responseVo.setAttrs(searchResponseAttrVo);
+                responseVo.setFilters(searchResponseAttrVo);
             }
         }
 

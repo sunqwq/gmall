@@ -37,6 +37,7 @@ Access-Control-Max-Age：本次许可的有效时长，单位是秒，**过期�
 
         // 1.允许跨域访问的域名,  不要写*，否则cookie就无法使用了
         config.addAllowedOrigin("http://manager.gmall.com");
+        config.addAllowedOrigin("http://gmall.com");
         config.addAllowedOrigin("http://www.gmall.com");
         // 2.允许携带的头信息
         config.addAllowedHeader("*");

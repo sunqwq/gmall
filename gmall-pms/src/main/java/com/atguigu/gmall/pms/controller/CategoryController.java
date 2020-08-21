@@ -35,6 +35,24 @@ public class CategoryController {
     @Autowired
     private CategoryService categoryService;
 
+    /**
+     * 根据三级分类的id查询一二三级分类的集合
+     */
+    @GetMapping("all/{cid}")
+    public ResponseVo<List<CategoryEntity>> query123categoriesByCid(@PathVariable Long cid) {
+        List<CategoryEntity> categoryEntities = this.categoryService.query123categoriesByCid(cid);
+        return ResponseVo.ok(categoryEntities);
+    }
+
+    /**
+     * 根据一级分类id查询二级分类 三级分类
+     */
+    @GetMapping("cates/{pid}")
+    public ResponseVo<List<CategoryEntity>> queryCategoriesWithSubByPid(@PathVariable("pid") Long pid) {
+        List<CategoryEntity> categoryEntities = this.categoryService.queryCategoriesWithSubByPid(pid);
+        return ResponseVo.ok(categoryEntities);
+    }
+
      /**
      * 树状一级分类
      */

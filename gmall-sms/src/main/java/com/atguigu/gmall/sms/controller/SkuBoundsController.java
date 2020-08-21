@@ -2,6 +2,7 @@ package com.atguigu.gmall.sms.controller;
 
 import java.util.List;
 
+import com.atguigu.gmall.sms.vo.ItemSaleVo;
 import com.atguigu.gmall.sms.vo.SkuSaleVo;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -34,6 +35,14 @@ public class SkuBoundsController {
 
     @Autowired
     private SkuBoundsService skuBoundsService;
+
+    /*根据skuId查询sku所有的优惠信息 sms的三张表*/
+    @GetMapping("sku/{skuId}")
+    public ResponseVo<List<ItemSaleVo>> querysalesByskuId(@PathVariable("skuId") Long skuId) {
+        List<ItemSaleVo> itemSaleVos = this.skuBoundsService.querysalesByskuId(skuId);
+        return ResponseVo.ok(itemSaleVos);
+    }
+
 
     /** pms SpuService远程调用
      * 大保存

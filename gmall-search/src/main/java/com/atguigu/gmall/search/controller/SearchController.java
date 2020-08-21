@@ -17,17 +17,18 @@ import java.io.IOException;
 /**
  * 搜索的业务逻辑
  */
-@RestController
-@RequestMapping
+@Controller
 public class SearchController {
 
     @Autowired
     private SearchService searchService;
 
     @GetMapping("/search")
-    public ResponseVo<SearchResponseVo> search(SearchParamVo paramVo) {
+    public String search(SearchParamVo paramVo,Model model) {
         SearchResponseVo responseVo = this.searchService.search(paramVo);
-        return ResponseVo.ok(responseVo);
+        model.addAttribute("response",responseVo);
+        model.addAttribute("searchParam",paramVo);
+        return "search";
     }
 
 }

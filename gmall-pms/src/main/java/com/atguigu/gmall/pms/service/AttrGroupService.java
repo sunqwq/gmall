@@ -1,6 +1,7 @@
 package com.atguigu.gmall.pms.service;
 
 import com.atguigu.gmall.pms.vo.AttrGroupVo;
+import com.atguigu.gmall.pms.vo.ItemGroupVo;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.atguigu.gmall.common.bean.PageResultVo;
@@ -25,5 +26,10 @@ public interface AttrGroupService extends IService<AttrGroupEntity> {
      * 2.查询分类下的组及规格参数
      */
     List<AttrGroupVo> queryGroupsWithAttrsByCid3(Long catId);
+
+    /**
+     * 根据分类id结合spuId或者skuId查询组及组下规格参数与值
+     */
+    List<ItemGroupVo> queryGroupWithAttrValue(Long cid, Long spuId, Long skuId);
 }
 

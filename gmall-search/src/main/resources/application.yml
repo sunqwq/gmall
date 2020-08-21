@@ -22,6 +22,25 @@ spring:
       uris: http://192.168.80.130:9200
   jackson:
     default-property-inclusion: non_null  #jackson 默认包含的属性  =>  non_null表示不包含空的字段
+  thymeleaf:
+    cache: false   #关闭thymeleaf缓存  ,使页面修改实时生效
+#rabbitMQ  => 消费者
+  rabbitmq:
+    host: 192.168.80.130
+    virtual-host: /feng
+    username: admin
+    password: admin
+#消费者确认机制
+# manual-手动  auto-自动（无异常直接确认，有异常无限重试） none-不重试
+    listener:
+      simple:
+        acknowledge-mode: manual
+        #能者多劳
+        prefetch: 1
+        #避免消息堆积,初始化多个消息线程
+        concurrency: 4
+
 feign:
   sentinel:
     enabled: true
+
