@@ -1,7 +1,10 @@
+<<<<<<< HEAD
 .idea/
 *.iml
 target/
 
+=======
+>>>>>>> bf11777dea9bc5ccd77cf407f58fcca31ab25ca3
 # Compiled class file
 *.class
 
