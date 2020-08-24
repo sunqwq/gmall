@@ -2,47 +2,47 @@ package com.atguigu.gmall.ums.entity;
 
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
+import lombok.Data;
 
 import java.io.Serializable;
 import java.util.Date;
-import lombok.Data;
 
 /**
- * 关注店铺表
+ * 购物积分记录表
  * 
  * @author fjy
  * @email 1159213392@qq.com
  * @date 2020-08-21 12:51:49
  */
 @Data
-@TableName("ums_user_collect_shop")
-public class UserCollectShopEntity implements Serializable {
+@TableName("ums_integration_history")
+public class IntegrationHistoryEntity implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	/**
-	 * 
+	 * id
 	 */
 	@TableId
 	private Long id;
 	/**
-	 * 用户id
+	 * member_id
 	 */
 	private Long userId;
 	/**
-	 * 店铺id
+	 * 创建时间
 	 */
-	private Long shopId;
+	private Date createTime;
 	/**
-	 * 店铺名
+	 * 变动数量
 	 */
-	private String shopName;
+	private Integer count;
 	/**
-	 * 店铺logo
+	 * 备注
 	 */
-	private String shopLogo;
+	private String remark;
 	/**
-	 * 关注时间
+	 * 来源
 	 */
-	private Date createtime;
+	private Integer sourceType;
 
 }

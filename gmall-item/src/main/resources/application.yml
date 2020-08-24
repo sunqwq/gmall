@@ -25,3 +25,11 @@ spring:
 feign:
   sentinel:
     enabled: true
+#手动配置线程池的 核心线程数,最大线程数,生存时间,阻塞队列
+threadPool:
+  coreSize: 100
+  maxSiza: 1000
+  timeOut: 60
+  blockingSize: 10000
+
+

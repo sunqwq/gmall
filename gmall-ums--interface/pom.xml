@@ -9,7 +9,7 @@
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
-    <artifactId>gmall-pms-interface</artifactId>
+    <artifactId>gmall-ums--interface</artifactId>
 
     <dependencies>
         <!--所有工程都要引入common工程-->
@@ -18,7 +18,7 @@
             <artifactId>gmall-common</artifactId>
             <version>0.0.1-SNAPSHOT</version>
         </dependency>
-        <!--手动引入 spring-webmvc 依赖(getmapping requestBody等)-->
+        <!--手动引入 spring-webmvc 依赖-->
         <dependency>
             <groupId>org.springframework</groupId>
             <artifactId>spring-webmvc</artifactId>

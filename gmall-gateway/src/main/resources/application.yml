@@ -27,7 +27,7 @@ spring:
           uri: lb://wms-service
           predicates:
             - Path=/wms/**
-        - id: search-route   #搜素 路由
+        - id: search-route   #搜索管理路由
           uri: lb://search-service
           predicates:
             - Host=search.gmall.com  #- Path=/search/**
@@ -39,18 +39,19 @@ spring:
           uri: lb://index-service
           predicates:
             - Path=/index/**
-        - id: item-route
+        - id: item-route    #商品详情页的同步请求路由
           uri: lb://item-service
           predicates:
             - Host=item.gmall.com
+        - id: item-route2   #商品详情页的异步请求路由
+          uri: lb://item-service
+          predicates:
+            - Path=/item/**
+        - id: msm-route    #短信路由
+          uri: lb://msm-service
+          predicates:
+            - Path=/msm/**
 
 
-#\u540D\u5B57\u7279\u610F\u4E0D\u4E00\u6837 \u4EE5\u4F5C\u533A\u5206
-#\u4EE3\u8868pms\u7684\u8DEF\u7531
-#\u4EE3\u8868pms\u7684\u670D\u52A1
-#\u65AD\u8A00 \u8DEF\u5F84\u5339\u914D
-#\u4EE3\u8868pms\u7684\u8DEF\u7531
-#\u4EE3\u8868pms\u7684\u670D\u52A1
-#\u65AD\u8A00 \u8DEF\u5F84\u5339\u914D
-#item-service
+
 

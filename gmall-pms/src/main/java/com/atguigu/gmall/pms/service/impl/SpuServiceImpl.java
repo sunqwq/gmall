@@ -105,6 +105,7 @@ public class SpuServiceImpl extends ServiceImpl<SpuMapper, SpuEntity> implements
         //1.1 保存spu表
         spuVo.setCreateTime(new Date());
         spuVo.setUpdateTime(spuVo.getCreateTime());
+        spuVo.setId(null);  //防止id注入,显示的设置id为null
         this.save(spuVo);
         //方便下面赋值
         Long spuId = spuVo.getId();
@@ -150,6 +151,7 @@ public class SpuServiceImpl extends ServiceImpl<SpuMapper, SpuEntity> implements
         }
         //2.1 保存sku表
         skus.forEach(skuVo -> {
+            skuVo.setId(null);
             skuVo.setSpuId(spuId);
             skuVo.setBrandId(spuVo.getBrandId());
             skuVo.setCatagoryId(spuVo.getCategoryId());
@@ -157,6 +159,7 @@ public class SpuServiceImpl extends ServiceImpl<SpuMapper, SpuEntity> implements
             if (!CollectionUtils.isEmpty(images)) {
                 // 如果页面没有上传默认图片,就取第一张图片做默认图片 ,有就用上传的图片
                 skuVo.setDefaultImage(StringUtils.isNotBlank(skuVo.getDefaultImage()) ? skuVo.getDefaultImage() : images.get(0));
+                //skuVo.setDefaultImage(skuVo.getDefaultImage() == null ? images.get(0) : skuVo.getDefaultImage());
             }
             this.skuMapper.insert(skuVo);
             //方便下面赋值
@@ -170,6 +173,7 @@ public class SpuServiceImpl extends ServiceImpl<SpuMapper, SpuEntity> implements
 
                     skuImagesEntity.setSkuId(skuId);
                     skuImagesEntity.setUrl(image);
+                    skuImagesEntity.setSort(1);
                     //设置默认图片的状态 0不是默认图  1是默认图
                     skuImagesEntity.setDefaultStatus(StringUtils.equals(image, skuVo.getDefaultImage()) ? 1 : 0);
                     return skuImagesEntity;
@@ -182,7 +186,11 @@ public class SpuServiceImpl extends ServiceImpl<SpuMapper, SpuEntity> implements
             //2.3 保存sku销售属性表  pms_sku_attr_value
             List<SkuAttrValueEntity> saleAttrs = skuVo.getSaleAttrs();
             if (!CollectionUtils.isEmpty(saleAttrs)) {
-                saleAttrs.forEach(saleAttr -> saleAttr.setSkuId(skuId));
+                saleAttrs.forEach(saleAttr -> {
+                    saleAttr.setSkuId(skuId);
+                    saleAttr.setSort(0);
+                    saleAttr.setId(null);
+                });
                 // 保存
                 this.skuAttrValueService.saveBatch(saleAttrs);
             }

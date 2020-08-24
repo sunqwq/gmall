@@ -10,6 +10,8 @@ import java.util.List;
 @Data
 public class BaseAttrValueVo extends SpuAttrValueEntity {
 
+    // 因为json数据是valueSelected的集合类型
+    // 需要转为string类型的AttrValue
     // 赋值给SpuAttrValueEntity表中的AttrValue 的方法
     private void setValueSelected(List<String> valueSelected) {
 

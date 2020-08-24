@@ -2,9 +2,13 @@ package com.atguigu.gmall.ums.controller;
 
 import java.util.List;
 
+import com.atguigu.gmall.ums.utils.RandomUtil;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
+import org.apache.commons.lang3.StringUtils;
+import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -33,6 +37,63 @@ public class UserController {
 
     @Autowired
     private UserService userService;
+    @Autowired
+    private RedisTemplate<String,String> redisTemplate;
+    @Autowired
+    private RabbitTemplate rabbitTemplate;
+
+    /**
+     * 注册功能  code 验证码
+     */
+//    @PostMapping("register")
+//    public String register(UserEntity userEntity,@RequestParam("code") String code) {
+//        this.userService.register(userEntity,code);
+//        return "register";
+//    }
+    @PostMapping("register")
+    public ResponseVo<Object> register(UserEntity userEntity,@RequestParam("code") String code) {
+        this.userService.register(userEntity,code);
+        return ResponseVo.ok(null);
+    }
+
+
+
+    /**
+     * 生成验证码
+     */
+    @GetMapping("code")
+    public ResponseVo<Object> sendCode(@RequestParam("phone") String phone) {
+//        String code = RandomUtil.getFourBitRandom();
+        //消息队列  生产者
+        this.rabbitTemplate.convertAndSend("MSM-ITEM-EXCHANGE", "code", phone);
+        return ResponseVo.ok();
+    }
+
+
+    /**
+     * 查询用户
+     * username/phone/email    password
+     */
+    @GetMapping("query")
+    public ResponseVo<UserEntity> queryUser(@RequestParam("loginName") String loginName,
+                                            @RequestParam("password") String password) {
+        UserEntity userEntity = this.userService.queryUser(loginName,password);
+        return ResponseVo.ok(userEntity);
+    }
+
+
+    /**
+     * 校验数据是否可用  (手机号 用户名 邮箱的唯一性)
+     * data: 要校验的数据
+     * type: 1.用户名 2.手机号 3.邮箱
+     */
+    @GetMapping("check/{data}/{type}")
+    public ResponseVo<Boolean> checkData(@PathVariable("data") String data,
+                                         @PathVariable("type") Integer type) {
+        Boolean flag = this.userService.checkData(data,type);
+        return ResponseVo.ok(flag);
+    }
+
 
     /**
      * 列表

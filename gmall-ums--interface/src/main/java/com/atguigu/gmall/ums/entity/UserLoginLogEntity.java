@@ -2,21 +2,21 @@ package com.atguigu.gmall.ums.entity;
 
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
+import lombok.Data;
 
 import java.io.Serializable;
 import java.util.Date;
-import lombok.Data;
 
 /**
- * 成长积分记录表
+ * 用户登陆记录表
  * 
  * @author fjy
  * @email 1159213392@qq.com
  * @date 2020-08-21 12:51:49
  */
 @Data
-@TableName("ums_growth_history")
-public class GrowthHistoryEntity implements Serializable {
+@TableName("ums_user_login_log")
+public class UserLoginLogEntity implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	/**
@@ -29,20 +29,20 @@ public class GrowthHistoryEntity implements Serializable {
 	 */
 	private Long userId;
 	/**
-	 * 创建时间
+	 * 登陆时间
 	 */
 	private Date createTime;
 	/**
-	 * 变动数量
+	 * 登录ip
 	 */
-	private Integer count;
+	private String ip;
 	/**
-	 * 备注
+	 * 登录城市
 	 */
-	private String remark;
+	private String city;
 	/**
-	 * 来源
+	 * 登录类型【0-web，1-移动】
 	 */
-	private Integer sourceType;
+	private Integer type;
 
 }

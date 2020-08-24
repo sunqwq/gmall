@@ -8,6 +8,7 @@ import com.atguigu.gmall.sms.service.SkuFullReductionService;
 import com.atguigu.gmall.sms.service.SkuLadderService;
 import com.atguigu.gmall.sms.vo.ItemSaleVo;
 import com.atguigu.gmall.sms.vo.SkuSaleVo;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
