@@ -119,7 +119,7 @@ public final class CookieUtils {
 	}
 
 	/**
-	 * 设置Cookie的值，并使其在指定时间内生效
+	 * 设置Cookie的值，并使其在指定时间内生效 , 指定httpOnly属性(设为true,不能被js解析)
 	 *
 	 * @param cookieMaxAge
 	 *            cookie生效的最大秒数
@@ -152,7 +152,7 @@ public final class CookieUtils {
 	}
 
 	/**
-	 * 得到cookie的域名
+	 * 得到cookie的域名  (需要在网关中设置)
 	 */
 	private static final String getDomainName(HttpServletRequest request) {
 		String domainName = null;
@@ -164,10 +164,10 @@ public final class CookieUtils {
 			domainName = "";
 		} else {
 			serverName = serverName.toLowerCase();
-//			serverName = serverName.substring(7);
-//			final int end = serverName.indexOf("/");
-//			serverName = serverName.substring(0, end);
-			final String[] domains = serverName.split("\\.");
+//			serverName = serverName.substring(7);   //切掉前7位 http://
+//			final int end = serverName.indexOf("/");  // 得到/第一次出现处的索引
+//			serverName = serverName.substring(0, end);  //把/后面的也切掉了  ==> sso.gmall.com
+			final String[] domains = serverName.split("\\.");  //按 .分离成 数组
 			int len = domains.length;
 			if (len > 3) {
 				// www.xxx.com.cn

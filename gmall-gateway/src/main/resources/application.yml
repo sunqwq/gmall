@@ -31,7 +31,7 @@ spring:
           uri: lb://search-service
           predicates:
             - Host=search.gmall.com  #- Path=/search/**
-        - id: index-route
+        - id: index-route        #首页路由
           uri: lb://index-service
           predicates:
             - Host=www.gmall.com,gmall.com
@@ -51,7 +51,38 @@ spring:
           uri: lb://msm-service
           predicates:
             - Path=/msm/**
-
+        - id: auth-route    #授权中心路由
+          uri: lb://auth-service
+          predicates:
+            - Host=sso.gmall.com
+        - id: cart-route
+          uri: lb://cart-service
+          predicates:
+            - Host=cart.gmall.com
+        - id: order-route
+          uri: lb://order-service
+          predicates:
+            - Host=order.gmall.com
+          filters:
+            - Auth=/
+        - id: payment-route
+          uri: lb://payment-service
+          predicates:
+            - Host=payment.gmall.com
+          filters:
+            - Auth=/pay.html,/alipay.html
+        - id: payment-route2
+          uri: lb://payment-service
+          predicates:
+            - Path=/pay/**
+#spring.cloud.gateway:
+      x-forwarded:  #当服务转发时,把域名信息通过host头信息转发给具体的服务
+        host-enabled: true
+#配置公钥路径,cookie名称
+auth:
+  jwt:
+    pubKeyPath: D:\IO\rsa\rsa.pub
+    cookieName: GMALL_TOKEN
 
 
 

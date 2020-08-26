@@ -46,6 +46,7 @@
             <groupId>io.jsonwebtoken</groupId>
             <artifactId>jjwt-jackson</artifactId> <!-- or jjwt-gson if Gson is preferred -->
         </dependency>
+<!--        提供了很多对日期处理的方法-->
         <dependency>
             <groupId>joda-time</groupId>
             <artifactId>joda-time</artifactId>

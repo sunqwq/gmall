@@ -51,9 +51,9 @@ public class UserController {
 //        return "register";
 //    }
     @PostMapping("register")
-    public ResponseVo<Object> register(UserEntity userEntity,@RequestParam("code") String code) {
+    public ResponseVo<Object> register(UserEntity userEntity,@RequestParam("code")String code) {
         this.userService.register(userEntity,code);
-        return ResponseVo.ok(null);
+        return ResponseVo.ok();
     }
 
 

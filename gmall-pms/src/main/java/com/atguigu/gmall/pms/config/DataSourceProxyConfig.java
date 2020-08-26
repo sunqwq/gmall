@@ -30,6 +30,9 @@ public class DataSourceProxyConfig {
 //        return hikariDataSource;
 //    }
 
+    /**
+     * 需要将DataSourceProxy 设置为主数据源 , 否则事务无法回滚
+     */
     @Bean
     @Primary  // 代表是主数据源
     public DataSourceProxy dataSourceProxy(@Value("${spring.datasource.url}") String url,

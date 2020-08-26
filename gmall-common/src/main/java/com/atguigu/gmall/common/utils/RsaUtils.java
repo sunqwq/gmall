@@ -63,7 +63,7 @@ public class RsaUtils {
      *
      * @param publicKeyFilename  公钥文件路径
      * @param privateKeyFilename 私钥文件路径
-     * @param secret             生成密钥的密文
+     * @param secret             生成密钥的密文 (俗称 盐 )
      * @throws IOException
      * @throws NoSuchAlgorithmException
      */

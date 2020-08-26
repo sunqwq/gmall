@@ -52,6 +52,8 @@ public class SpuServiceImpl extends ServiceImpl<SpuMapper, SpuEntity> implements
     private GmallSmsClient smsClient;
     @Autowired
     private RabbitTemplate rabbitTemplate;
+    @Autowired
+    private SpuDescService spuDescService;
 
     @Override
     public PageResultVo queryPage(PageParamVo paramVo) {
@@ -98,7 +100,7 @@ public class SpuServiceImpl extends ServiceImpl<SpuMapper, SpuEntity> implements
      *  在分支事务上加本地注解即可@Transactional
      */
     @Override
-    //@Transactional   //开启事务 默认required  常用required和required_new
+    //@Transactional   //开启事务 Transactional是spring提供的 ,GlobalTransactional是seata提供的
     @GlobalTransactional
     public void bigSave(SpuVo spuVo) {
     //1.保存spu相关信息
@@ -122,6 +124,7 @@ public class SpuServiceImpl extends ServiceImpl<SpuMapper, SpuEntity> implements
             descEntity.setDecript(StringUtils.join(spuImages, ","));
             // 保存到数据库
             this.spuDescMapper.insert(descEntity);
+            //spuDescService.save(descEntity);
             System.out.println("descEntity = " + descEntity);
         }
 
@@ -136,12 +139,14 @@ public class SpuServiceImpl extends ServiceImpl<SpuMapper, SpuEntity> implements
                 SpuAttrValueEntity spuAttrValueEntity = new SpuAttrValueEntity();
                 BeanUtils.copyProperties(baseAttrValueVo, spuAttrValueEntity);
                 //和上面同一个spuId  (传入值时 没有传spu_id)
+
                 spuAttrValueEntity.setSpuId(spuId);
                 return spuAttrValueEntity;
 
             }).collect(Collectors.toList());
             //保存    mapper没有保存集合的方法,所以用service
             this.spuAttrValueService.saveBatch(spuAttrValueEntities);
+
         }
 
      // 2.保存sku相关信息
@@ -168,6 +173,7 @@ public class SpuServiceImpl extends ServiceImpl<SpuMapper, SpuEntity> implements
             //2.2 保存sku图片表
             if (!CollectionUtils.isEmpty(images)) {
                 List<SkuImagesEntity> skuImagesEntites = images.stream().map(image -> {
+
                     // 创建 图片表
                     SkuImagesEntity skuImagesEntity = new SkuImagesEntity();
 
@@ -177,6 +183,7 @@ public class SpuServiceImpl extends ServiceImpl<SpuMapper, SpuEntity> implements
                     //设置默认图片的状态 0不是默认图  1是默认图
                     skuImagesEntity.setDefaultStatus(StringUtils.equals(image, skuVo.getDefaultImage()) ? 1 : 0);
                     return skuImagesEntity;
+
                 }).collect(Collectors.toList());
                 // 批量保存
                 this.skuImagesService.saveBatch(skuImagesEntites);

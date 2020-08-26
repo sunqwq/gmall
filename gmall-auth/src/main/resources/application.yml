@@ -1,5 +1,5 @@
 server:
-  port: 18088
+  port: 18089
 spring:
   cloud:
     nacos:
@@ -17,19 +17,20 @@ spring:
   sleuth:
     sampler:
       probability: 1
-  redis:
-    host: 192.168.80.130
 #thymeleaf      取消缓存
   thymeleaf:
     cache: false
 feign:
   sentinel:
     enabled: true
-#手动配置线程池的 核心线程数,最大线程数,生存时间,阻塞队列
-threadPool:
-  coreSize: 100
-  maxSiza: 1000
-  timeOut: 60
-  blockingSize: 10000
+#配置公钥私钥路径,加盐,过期时间(3小时),cookie名称
+auth:
+  jwt:
+    pubKeyPath: D:\IO\rsa\rsa.pub
+    priKeyPath: D:\IO\rsa\rsa.pri
+    secret: sdsag#(*)#158d@asa
+    expire: 180
+    cookieName: GMALL_TOKEN
+    unick: unick
 
 

@@ -69,18 +69,17 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, UserEntity> impleme
 //            return false;
 //        }
         // 2.生成盐
-        String salt = StringUtils.replace(UUID.randomUUID().toString(), "-", "");
+        String salt = UUID.randomUUID().toString().substring(0, 6);
         userEntity.setSalt(salt);
         // 3.对密码加密
-        userEntity.setPassword(DigestUtils.md5Hex(salt + DigestUtils.md5Hex(userEntity.getPassword())));
+        userEntity.setPassword(DigestUtils.md5Hex(userEntity.getPassword() + salt));
         // 4.设置创建时间等
+        userEntity.setLevelId(1l);
         userEntity.setCreateTime(new Date());
         userEntity.setSourceType(1);
-        userEntity.setLevelId(1l);
-        userEntity.setStatus(1);
         userEntity.setIntegration(1000);
         userEntity.setGrowth(1000);
-        userEntity.setPhone(userEntity.getPhone());
+        userEntity.setStatus(1);
         // 5.添加到数据库
         this.save(userEntity);
 

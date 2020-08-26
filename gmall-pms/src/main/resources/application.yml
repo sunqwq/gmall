@@ -25,7 +25,7 @@ spring:
   cloud:
     alibaba:
       seata:
-        tx-service-group: pms-service-fescar-service-group  #需要和file.conf中对应
+        tx-service-group: pms-service-fescar-service-group  #需要和file.conf中的vgroupMapping对应
 #rabbitMQ   => 生产者
   rabbitmq:
     host: 192.168.80.130
