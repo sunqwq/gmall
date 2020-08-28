@@ -30,6 +30,8 @@ import java.util.Map;
 /**
  *  2.局部过滤器
  *    需要到配置文件中配置
+ *
+ *    必须登录才放行
  */
 
 // 2.自定义过滤器工厂中指定Config泛型：KeyValueConfig
@@ -47,7 +49,7 @@ public class AuthGatewayFilterFactory extends AbstractGatewayFilterFactory<AuthG
 
     /**
      * 拦截的业务逻辑
-     *
+     *  使用局部过滤器实现了身份的统一认证
      */
     @Override
     public GatewayFilter apply(PathesConfig config) {
@@ -63,12 +65,12 @@ public class AuthGatewayFilterFactory extends AbstractGatewayFilterFactory<AuthG
                 String curPath = request.getURI().getPath();
                 //获取黑名单 (配置文件中拦截的路径)
                 List<String> pathes = config.pathes;
-                System.out.println(" 这是自定义1 " + pathes);
+                System.out.println(" 这是自定义过滤1 " + pathes);
                 //如果当前路径不在黑名单中 ,直接放行
                 if (pathes.stream().allMatch(path -> curPath.indexOf(path) == -1)) {
                     return chain.filter(exchange);
                 }
-                System.out.println(" 这是自定义2 ");
+
              // 2. 获取 头信息 或者 cookie 中的token信息 (头信息中只会有一个token  contains包含)
                 String token = request.getHeaders().getFirst("token");
                 if (StringUtils.isBlank(token)) {
@@ -102,7 +104,7 @@ public class AuthGatewayFilterFactory extends AbstractGatewayFilterFactory<AuthG
                     request = request.mutate().header("userId", userId).header("userName", username).build();
                       // 返回新的exchange
                     exchange = exchange.mutate().request(request).build();
-                    System.out.println(" 这是自定义3 ");
+                    System.out.println(" 这是自定义2,exchange: "+ exchange);
                 } catch (Exception e) {
                     e.printStackTrace();
                     // 报错，直接拦截

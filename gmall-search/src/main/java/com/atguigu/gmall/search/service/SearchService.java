@@ -159,7 +159,7 @@ public class SearchService {
 
 
 
-        // 3. 构建分页
+        // 3. 构建分页 (页码从0开始)
         Integer pageNum = paramVo.getPageNum();
         Integer pageSize = paramVo.getPageSize();
         sourceBuilder.from((pageNum -1)* pageSize);
@@ -171,7 +171,7 @@ public class SearchService {
                 .preTags("<font style='color:red'>")
                 .postTags("</font>"));
 
-        // 5. 构建聚合  (terms 划分桶的方式，这里是根据词条划分 ; field 划分桶的字段)
+        // 5. 构建聚合  (AggregationBuilders 工具类  terms 划分桶的方式，这里是根据词条划分 ; field 划分桶的字段)
         // 5.1. 构建品牌聚合
         sourceBuilder.aggregation(AggregationBuilders.terms("brandIdAgg").field("brandId")
                 .subAggregation(AggregationBuilders.terms("brandNameAgg").field("brandName"))
@@ -205,6 +205,7 @@ public class SearchService {
         SearchHit[] hitsHits = hits.getHits();
         if (hitsHits == null || hitsHits.length == 0) {
             return responseVo;
+
         }
         if (hitsHits != null) {
             List<Goods> goodsList = Stream.of(hitsHits).map(hit -> {
@@ -237,7 +238,7 @@ public class SearchService {
         // 获取聚合
         Map<String, Aggregation> aggregationMap = response.getAggregations().asMap();
 
-        // 解析品牌id聚合获取品牌的过滤条件
+        // 解析品牌id聚合获取品牌的过滤条件        ParsedLongTerms解析long类型的词条
         ParsedLongTerms brandIdAgg = (ParsedLongTerms) aggregationMap.get("brandIdAgg");
         if (brandIdAgg != null) {
             List<? extends Terms.Bucket> brandIdAggBuckets = brandIdAgg.getBuckets();
@@ -249,7 +250,7 @@ public class SearchService {
 
                     // 获取桶中的子聚合
                     Map<String, Aggregation> subAggregationMap = ((Terms.Bucket) bucket).getAggregations().asMap();
-                    // 获取品牌名称的子聚合
+                    // 获取品牌名称的子聚合        ParsedStringTerms  解析string类型的词条
                     ParsedStringTerms brandNameAgg = (ParsedStringTerms) subAggregationMap.get("brandNameAgg");
                     if (brandNameAgg != null) {
                         List<? extends Terms.Bucket> brandNameAggBuckets = brandNameAgg.getBuckets();

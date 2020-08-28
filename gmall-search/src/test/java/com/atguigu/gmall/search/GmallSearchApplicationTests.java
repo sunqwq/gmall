@@ -21,8 +21,14 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
-/** 两种客户端: ElasticsearchRestTemplate  和 Repository
- * Repository 客户端
+/**  1. ES原生 客户端: TransportClient(即将废除)    RestClient
+ *   2. spring整合的 Spring Data Elasticsearch
+ *      ==>ElasticsearchTemplate是TransportClient客户端  (不怎么用)
+ *      ==> ElasticsearchRestTemplate是RestHighLevel客户端 => 用于创建索引,映射,文档查询
+ *   3. Repository
+ *
+ * 所以常用两种客户端: ElasticsearchRestTemplate  和 Repository
+ *
  * ElasticsearchRestTemplate：基于High level rest client
  * 			createIndex(User.class)
  * 			putMapping(User.class)

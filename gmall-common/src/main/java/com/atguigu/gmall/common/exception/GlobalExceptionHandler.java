@@ -14,12 +14,12 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 @ControllerAdvice
 public class GlobalExceptionHandler {
-
+    //指定出现什么异常执行这个方法
     @ExceptionHandler(Exception.class)
     @ResponseBody
     public ResponseVo error(Exception e) {
         e.printStackTrace();
-        return ResponseVo.fail();
+        return ResponseVo.fail("执行了全局异常处理....");
     }
 
     @ExceptionHandler(UserException.class)

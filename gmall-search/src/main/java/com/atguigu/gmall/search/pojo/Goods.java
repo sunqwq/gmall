@@ -26,6 +26,8 @@ import java.util.List;
  *
  *    ElasticsearchTemplate是TransportClient客户端
  *    ElasticsearchRestTemplate是RestHighLevel客户端
+ *
+ *    每一个goods对应的是一个sku
  */
 @Data
 @Document(indexName = "goods", type = "info", shards = 3, replicas = 2)
