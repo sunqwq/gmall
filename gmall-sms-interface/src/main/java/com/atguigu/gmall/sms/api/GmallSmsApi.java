@@ -1,6 +1,7 @@
 package com.atguigu.gmall.sms.api;
 
 import com.atguigu.gmall.common.bean.ResponseVo;
+import com.atguigu.gmall.sms.entity.SkuBoundsEntity;
 import com.atguigu.gmall.sms.vo.ItemSaleVo;
 import com.atguigu.gmall.sms.vo.SkuSaleVo;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -27,6 +28,12 @@ public interface GmallSmsApi {
     @GetMapping("sms/skubounds/sku/{skuId}")
     public ResponseVo<List<ItemSaleVo>> querysalesByskuId(@PathVariable("skuId") Long skuId);
 
+    /**
+     *
+     * 根据skuId查询购物积分,成长积分
+     */
+    @GetMapping("sms/skubounds/bounds/{skuId}")
+    public ResponseVo<SkuBoundsEntity> queryboundsBySkuId(@PathVariable("skuId") Long skuId);
 
 
 }

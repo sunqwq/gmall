@@ -1,7 +1,7 @@
 package com.atguigu.gmall.cart.Interceptor;
 
 import com.atguigu.gmall.cart.config.JwtProperties;
-import com.atguigu.gmall.cart.pojo.UserInfo;
+import com.atguigu.gmall.common.bean.UserInfo;
 import com.atguigu.gmall.common.utils.CookieUtils;
 import com.atguigu.gmall.common.utils.JwtUtils;
 import org.apache.commons.lang3.StringUtils;
@@ -9,7 +9,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.stereotype.Component;
 import org.springframework.web.servlet.HandlerInterceptor;
-import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -19,7 +18,7 @@ import java.util.UUID;
 /**
  * HandlerInterceptor 自定义拦截器 (SpringMVC)
  *
- * 使用拦截器 登录校验   获取userId或userKey
+ * 使用拦截器 登录校验   获取userId或userKey  (拦截器)
  */
 
 //启用JwtProperties

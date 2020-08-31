@@ -5,18 +5,14 @@ import com.atguigu.gmall.cart.Interceptor.LoginInterceptor;
 import com.atguigu.gmall.cart.feign.GmallPmsClient;
 import com.atguigu.gmall.cart.feign.GmallSmsClient;
 import com.atguigu.gmall.cart.feign.GmallWmsClient;
-import com.atguigu.gmall.cart.mapper.CartMapper;
 import com.atguigu.gmall.cart.pojo.Cart;
-import com.atguigu.gmall.cart.pojo.UserInfo;
+import com.atguigu.gmall.common.bean.UserInfo;
 import com.atguigu.gmall.common.bean.ResponseVo;
 import com.atguigu.gmall.common.exception.UserException;
 import com.atguigu.gmall.pms.entity.SkuAttrValueEntity;
 import com.atguigu.gmall.pms.entity.SkuEntity;
 import com.atguigu.gmall.sms.vo.ItemSaleVo;
 import com.atguigu.gmall.wms.entity.WareSkuEntity;
-import com.baomidou.mybatisplus.core.conditions.update.UpdateWrapper;
-import jdk.nashorn.internal.scripts.JD;
-import org.hibernate.validator.internal.IgnoreForbiddenApisErrors;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.BoundHashOperations;
 import org.springframework.data.redis.core.StringRedisTemplate;
@@ -113,7 +109,7 @@ public class CartService {
             }
 
             //mysql新增cart
-            this.cartAsyncService.addCart(cart);
+            this.cartAsyncService.addCart(userId,cart);
 
             // 并且新增价格的缓存，如果已经有人把该商品加入了购物车，该商品的价格缓存已存在。这时依然进行加缓存，相当于做了价格同步
             this.redisTemplate.opsForValue().set(PRICE_PREFIX + skuId, skuEntity.getPrice().toString());
@@ -194,7 +190,7 @@ public class CartService {
                     //没有相同的商品就新增
                     cart.setUserId(userId.toString());
                     //新增mysql的数量
-                    this.cartAsyncService.addCart(cart);
+                    this.cartAsyncService.addCart(userId.toString(),cart);
                 }
                 //更新redis的数量
                 loginHashOps.put(cart.getSkuId().toString(), JSON.toJSONString(cart));
@@ -297,6 +293,21 @@ public class CartService {
         }
     }
 
+    /**
+     * 订单确认页需要的接口
+     * 		2.根据用户id查询该用户 选中 的购物车信息
+     */
+    public List<Cart> queryCheckedCartByUserId(Long userId) {
+        BoundHashOperations<String, Object, Object> hashOps = this.redisTemplate.boundHashOps(KEY_PREFIX + userId);
+        List<Object> cartJsons = hashOps.values();
+        if (!CollectionUtils.isEmpty(cartJsons)) {
+            return cartJsons.stream().map(cartJson -> JSON.parseObject(cartJson.toString(), Cart.class)).filter(cart -> cart.getCheck()).collect(Collectors.toList());
+        }
+        return null;
+    }
+
+
+
 
 //===================================
     /**
@@ -358,6 +369,7 @@ public class CartService {
         }
         return AsyncResult.forValue("hello executor2");
     }
+
 
 
 }

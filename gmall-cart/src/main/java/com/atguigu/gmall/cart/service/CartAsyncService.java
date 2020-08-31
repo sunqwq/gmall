@@ -25,11 +25,11 @@ public class CartAsyncService {
 
     //异步添加到mysql数据库
     @Async
-    public void addCart(Cart cart) {
+    public void addCart(String userId,Cart cart) {
         this.cartMapper.insert(cart);
     }
 
-    // 5.删除未登录的购物车
+    // 删除未登录的购物车
     @Async
     public void deleteCartsByUserId(String userKey) {
         this.cartMapper.delete(new QueryWrapper<Cart>().eq("user_id", userKey));

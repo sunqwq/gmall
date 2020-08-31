@@ -28,7 +28,7 @@ spring:
 #关闭thymeleaf 的缓存
   thymeleaf:
     cache: false
-#配置线程池
+#配置线程池  搭配SpringTask 异步编程框架
   task:
     execution:
       thread-name-prefix: cart-task- # 线程池的线程名的前缀。默认为 task- ，建议根据自己应用来设置

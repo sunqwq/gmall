@@ -15,6 +15,14 @@
 
 
     <dependencies>
+
+        <!--引入 cart 接口工程-->
+        <dependency>
+            <groupId>com.atguigu</groupId>
+            <artifactId>gmall-cart-interface</artifactId>
+            <version>0.0.1-SNAPSHOT</version>
+        </dependency>
+
         <!--        引入rabbitMQ消息中间件 -->
         <dependency>
             <groupId>org.springframework.boot</groupId>

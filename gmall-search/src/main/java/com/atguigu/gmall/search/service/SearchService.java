@@ -310,7 +310,7 @@ public class SearchService {
         }
 
 
-        //获取规格参数的聚合
+        //获取规格参数的嵌套聚合
         ParsedNested attrAgg = (ParsedNested) aggregationMap.get("attrAgg");
         ParsedLongTerms attrIdAgg = (ParsedLongTerms) attrAgg.getAggregations().get("attrIdAgg");
 

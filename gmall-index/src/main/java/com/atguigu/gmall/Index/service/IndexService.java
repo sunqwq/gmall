@@ -170,7 +170,9 @@ public class IndexService {
             this.stringRedisTemplate.opsForValue().set("num", String.valueOf(++num));
             //4.释放锁   特点四:防误删：不能释放别人的锁  特点三:判断和删除锁之间 具备原子性
             //execute 执行脚本
-            String script = "if redis.call('get', KEYS[1]) == ARGV[1] then return redis.call('del', KEYS[1]) else return 0 end";
+            String script = "if redis.call('get', KEYS[1]) == ARGV[1] " +
+                    "then return redis.call('del', KEYS[1]) " +
+                    "else return 0 end";
             this.stringRedisTemplate.execute(new DefaultRedisScript<>(script, Long.class), Arrays.asList("lock"), uuid);
 
 

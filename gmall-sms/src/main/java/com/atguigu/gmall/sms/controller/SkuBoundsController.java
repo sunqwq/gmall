@@ -4,6 +4,7 @@ import java.util.List;
 
 import com.atguigu.gmall.sms.vo.ItemSaleVo;
 import com.atguigu.gmall.sms.vo.SkuSaleVo;
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -35,6 +36,16 @@ public class SkuBoundsController {
 
     @Autowired
     private SkuBoundsService skuBoundsService;
+
+    /**
+     *
+     * 根据skuId查询购物积分,成长积分
+     */
+    @GetMapping("bounds/{skuId}")
+    public ResponseVo<SkuBoundsEntity> queryboundsBySkuId(@PathVariable("skuId") Long skuId) {
+        SkuBoundsEntity skuBoundsEntity = this.skuBoundsService.getOne(new QueryWrapper<SkuBoundsEntity>().eq("sku_id",skuId));
+        return ResponseVo.ok(skuBoundsEntity);
+    }
 
     /*根据skuId查询sku所有的优惠信息 sms的三张表*/
     @GetMapping("sku/{skuId}")

@@ -1,0 +1,33 @@
+package com.atguigu.gmall.oms.vo;
+
+import com.atguigu.gmall.pms.entity.SkuAttrValueEntity;
+import com.atguigu.gmall.sms.vo.ItemSaleVo;
+import lombok.Data;
+
+import java.math.BigDecimal;
+import java.util.List;
+
+/**
+ *  送货清单
+ */
+@Data
+public class OrderItemVo {
+
+    private Long skuId;
+
+    private String defaultImage;  // 图片
+
+    private String title;  // 标题
+
+    private List<SkuAttrValueEntity> saleAttrs; // 销售属性：List<SkuAttrValueEntity>的json格式
+
+    private BigDecimal price; // 加入购物车时的价格
+
+    private BigDecimal count;  // 数量
+
+    private Boolean store = false; // 是否有货
+
+    private List<ItemSaleVo> sales; // 营销信息: List<ItemSaleVo>的json格式
+
+    private BigDecimal weight;   //重量
+}

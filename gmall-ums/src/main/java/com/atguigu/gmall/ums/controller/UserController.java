@@ -108,7 +108,8 @@ public class UserController {
 
 
     /**
-     * 信息
+     * 订单确认页需要的接口：
+     * 		7.根据userId查询用户 ( 积分信息 )
      */
     @GetMapping("{id}")
     @ApiOperation("详情查询")

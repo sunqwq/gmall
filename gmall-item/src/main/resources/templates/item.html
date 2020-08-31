@@ -161,7 +161,9 @@
 							</div>
 							<div class="fl price">
 								<i>¥</i>
-                                <!--
+                                <!--参数一:动态数据  参数二:小数点前保留位数,
+                                参数三:小数点前每超过三位,每三位的分隔符
+		      					参数四: 小数点后保留位数  参数五: 小数点格式
                                     ${#numbers.formatDecimal(num,0,'COMMA',2,'POINT')}则显示 .00
                                     ${#numbers.formatDecimal(num,1,'COMMA',2,'POINT')}则显示 0.00
                                 -->
@@ -179,8 +181,8 @@
 							</div>
 							<div class="fl fix-width">
                                 <div th:each="sale : *{sales}">
-<!--                                    <i class="red-bg" th:text="${#numbers.formatDecimal(sale.type,1,'COMMA' ,2,'POINT')}">加价购</i>-->
-<!--									<em class="t-gray" th:text="${#numbers.formatDecimal(sale.desc,1,'COMMA' ,2,'POINT')}">满999.00另加20.00元，或满1999.00另加30.00元，或满2999.00另加40.00元，即可在购物车换购热销商品</em>-->
+
+									<!--<em class="t-gray" th:text="${#numbers.formatDecimal(sale.desc,1,'COMMA' ,2,'POINT')}">满999.00另加20.00元，或满1999.00另加30.00元，或满2999.00另加40.00元，即可在购物车换购热销商品</em>-->
                                     <i class="red-bg" th:text="${sale.type}">加价购</i>
                                     <em class="t-gray" th:text="${sale.desc}">满999.00另加20.00元，或满1999.00另加30.00元，或满2999.00另加40.00元，即可在购物车换购热销商品</em>
                                 </div>

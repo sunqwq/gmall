@@ -2,6 +2,8 @@ package com.atguigu.gmall.oms.controller;
 
 import java.util.List;
 
+import com.atguigu.gmall.oms.vo.OrderSubmitVo;
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -33,6 +35,26 @@ public class OrderController {
 
     @Autowired
     private OrderService orderService;
+
+    /*
+       根据订单编号 查询订单
+     */
+    @GetMapping("token/{orderToken}")
+    public ResponseVo<OrderEntity> queryOrderByToken(@PathVariable("orderToken")String orderToken,@RequestParam("userId")Long userId) {
+        OrderEntity orderEntity = this.orderService.getOne(new QueryWrapper<OrderEntity>().eq("order_sn", orderToken).eq("user_id", userId));
+        return ResponseVo.ok(orderEntity);
+    }
+
+    /**
+     * 提交订单处理步骤：
+     * 		4.下单操作（新增订单表,订单详情表）
+     */
+    @PostMapping("submit/{userId}")
+    public ResponseVo<OrderEntity> saveOrder(@RequestBody OrderSubmitVo submitVo,@PathVariable("userId")Long userId) {
+        OrderEntity orderEntity = this.orderService.saveOrder(submitVo, userId);
+        return ResponseVo.ok(orderEntity);
+    }
+
 
     /**
      * 列表

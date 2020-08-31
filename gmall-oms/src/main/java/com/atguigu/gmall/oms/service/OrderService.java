@@ -1,5 +1,6 @@
 package com.atguigu.gmall.oms.service;
 
+import com.atguigu.gmall.oms.vo.OrderSubmitVo;
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.atguigu.gmall.common.bean.PageResultVo;
 import com.atguigu.gmall.common.bean.PageParamVo;
@@ -17,5 +18,11 @@ import java.util.Map;
 public interface OrderService extends IService<OrderEntity> {
 
     PageResultVo queryPage(PageParamVo paramVo);
+
+    /**
+     * 提交订单处理步骤：
+     * 		4.下单操作（新增订单表,订单详情表）
+     */
+    OrderEntity saveOrder(OrderSubmitVo submitVo, Long userId);
 }
 

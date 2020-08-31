@@ -1,0 +1,43 @@
+server:
+  port: 18091
+spring:
+  cloud:
+    nacos:
+      discovery:
+        server-addr: localhost:8848
+    sentinel:
+      transport:
+        dashboard: localhost:8080
+        port: 8719
+  zipkin:
+    base-url: http://localhost:9411
+    discovery-client-enabled: true
+    sender:
+      type: web
+  sleuth:
+    sampler:
+      probability: 1
+  #取消 thymeleaf 缓存
+  thymeleaf:
+    cache: false
+  redis:
+    host: 192.168.80.130
+  #rabbitMQ   => 生产者
+  rabbitmq:
+    host: 192.168.80.130
+    virtual-host: /feng
+    username: admin
+    password: admin
+    publisher-confirm-type: simple
+    publisher-returns: true
+#确认消息是否到达交换机:simple是同步方式生产者确认(阻塞) correlated异步确认
+#确认消息是否到达队列
+feign:
+  sentinel:
+    enabled: true
+#手动配置线程池的 核心线程数,最大线程数,生存时间,阻塞队列
+threadPool:
+  coreSize: 100
+  maxSiza: 1000
+  timeOut: 60
+  blockingSize: 10000

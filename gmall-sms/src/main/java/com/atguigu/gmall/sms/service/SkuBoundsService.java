@@ -28,5 +28,8 @@ public interface SkuBoundsService extends IService<SkuBoundsEntity> {
 
     /*根据skuId查询sku所有的优惠信息 sms的三张表*/
     List<ItemSaleVo> querysalesByskuId(Long skuId);
+
+
+
 }
 

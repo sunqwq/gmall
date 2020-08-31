@@ -22,6 +22,17 @@ public class CartController {
     @Autowired
     private CartService cartService;
 
+    /**
+     * 订单确认页需要的接口
+     * 		2.根据用户id查询该用户选中购物车信息
+     */
+    @GetMapping("user/{userId}")
+    @ResponseBody
+    public ResponseVo<List<Cart>> queryCheckedCartByUserId(@PathVariable("userId") Long userId) {
+        List<Cart> carts = this.cartService.queryCheckedCartByUserId(userId);
+        return ResponseVo.ok(carts);
+    }
+
     /*
     加入购物车   (skuId,count在路径中携带 已有)
      */

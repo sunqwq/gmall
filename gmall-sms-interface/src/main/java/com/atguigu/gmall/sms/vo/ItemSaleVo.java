@@ -4,6 +4,6 @@ import lombok.Data;
 
 @Data
 public class ItemSaleVo {
-    private String type;
-    private String desc;
+    private String type;   //积分  满减   打折
+    private String desc;   // 满...优惠...
 }
