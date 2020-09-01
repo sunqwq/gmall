@@ -2,24 +2,30 @@ package com.atguigu.gmall.payment.controller;
 
 
 import com.alipay.api.AlipayApiException;
+import com.atguigu.gmall.common.bean.ResponseVo;
+import com.atguigu.gmall.common.bean.UserInfo;
 import com.atguigu.gmall.common.exception.OrderException;
 import com.atguigu.gmall.oms.entity.OrderEntity;
+import com.atguigu.gmall.payment.Interceptor.LoginInterceptor;
 import com.atguigu.gmall.payment.config.AlipayTemplate;
 import com.atguigu.gmall.payment.entity.PaymentInfoEntity;
 import com.atguigu.gmall.payment.service.PaymentService;
 import com.atguigu.gmall.payment.vo.PayAsyncVo;
 import com.atguigu.gmall.payment.vo.PayVo;
 import org.apache.commons.lang3.StringUtils;
+import org.redisson.api.RCountDownLatch;
+import org.redisson.api.RLock;
+import org.redisson.api.RedissonClient;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 
 import java.math.BigDecimal;
+import java.util.HashMap;
+import java.util.Map;
 
 @Controller
 public class PaymentController {
@@ -140,5 +146,61 @@ public class PaymentController {
     }
 
 
+//===========秒杀小案例====================================
+    @Autowired
+    private StringRedisTemplate redisTemplate;
 
+    @Autowired
+    private RedissonClient redissonClient;
+
+    @GetMapping("seckill/{skuId}")
+    public ResponseVo<Object> seckill(@PathVariable("skuId")Long skuId){
+        UserInfo userInfo = LoginInterceptor.getUserInfo();
+
+        // 代码级别的限流 分布式信号量 也是锁,但在秒杀中不适用,没意义,
+        // 只适合用于需要限流,但不存在并发安全问题时
+//        RSemaphore semaphore = this.redissonClient.getSemaphore("semaphore");
+//        semaphore.trySetPermits(100);
+
+        RLock fairLock = this.redissonClient.getFairLock("lock:" + skuId);
+        fairLock.lock();
+
+        String stockString = this.redisTemplate.opsForValue().get("seckill:stock:" + skuId);
+        if (StringUtils.isBlank(stockString) || new Integer(stockString) <= 0){
+            throw new RuntimeException("手慢了，秒杀已结束！");
+        }
+        // 从redis中减库存
+        this.redisTemplate.opsForValue().decrement("seckill:stock:" + skuId);
+
+        // 发送消息给oms创建订单，oms中创建订单成功后减库存
+        Map<String, Object> map = new HashMap<>();
+        map.put("userId", userInfo.getUserId());
+        map.put("skuId", skuId);
+        map.put("count", 1);
+        this.rabbitTemplate.convertAndSend("ORDER-EXCHANGE", "sec:kill", map);
+
+        // 防止订单 还没有创建成功就查询订单
+        RCountDownLatch countdown = this.redissonClient.getCountDownLatch("countdown:" + skuId);
+        countdown.trySetCount(1);
+
+        //TODO 在oms收到消息创建订单号,别忘了调用countdown.countdown方法,这样,计数减一,用户才可以查看到订单
+
+        fairLock.unlock();
+
+        return ResponseVo.ok();
+    }
+
+    //查询秒杀订单
+    @GetMapping("seckill/success/{skuId}")
+    public ResponseVo<Object> queryOrder(@PathVariable("skuId")Long skuId) throws InterruptedException {
+        RCountDownLatch countdown = this.redissonClient.getCountDownLatch("countdown:" + skuId);
+        countdown.await();
+
+        UserInfo userInfo = LoginInterceptor.getUserInfo();
+        // 根据用户信息查询当前的秒杀订单 TODO
+
+
+        //返回订单信息,这里以null代替
+        return ResponseVo.ok(null);
+    }
 }

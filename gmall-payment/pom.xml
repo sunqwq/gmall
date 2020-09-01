@@ -15,6 +15,13 @@
 
 
     <dependencies>
+        <!--  引入分布式锁框架 redisson-->
+        <dependency>
+            <groupId>org.redisson</groupId>
+            <artifactId>redisson</artifactId>
+            <version>3.13.2</version>
+        </dependency>
+
         <!--引入 alipay 支付宝依赖-->
         <dependency>
             <groupId>com.alipay.sdk</groupId>
