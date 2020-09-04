@@ -24,7 +24,9 @@ public interface GmallSmsApi {
     @PostMapping("sms/skubounds/sku/sales")
     public ResponseVo<Object> saveSkuSales(@RequestBody SkuSaleVo skuSaleVo);
 
-    /*根据skuId查询sku所有的优惠信息 sms的三张表*/
+    /* 商品详情页需要的数据接口：6
+    根据skuId查询sku所有的优惠信息 sms的三张表
+    */
     @GetMapping("sms/skubounds/sku/{skuId}")
     public ResponseVo<List<ItemSaleVo>> querysalesByskuId(@PathVariable("skuId") Long skuId);
 

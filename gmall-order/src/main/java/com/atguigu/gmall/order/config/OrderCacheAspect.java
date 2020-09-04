@@ -8,6 +8,7 @@ import org.apache.commons.lang3.StringUtils;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
+import org.aspectj.lang.annotation.Before;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.data.redis.core.script.DefaultRedisScript;
@@ -49,7 +50,7 @@ public class OrderCacheAspect {
      * @return
      * @throws Throwable
      */
-    @Around("@annotation(com.atguigu.gmall.order.config.OrderCache)")
+    @Before("@annotation(com.atguigu.gmall.order.config.OrderCache)")
     public Object around(ProceedingJoinPoint joinPoint) throws Throwable{
         // 1.防重
         OrderSubmitVo submitVo = new OrderSubmitVo();

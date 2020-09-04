@@ -162,7 +162,7 @@ public class SearchService {
         // 3. 构建分页 (页码从0开始)
         Integer pageNum = paramVo.getPageNum();
         Integer pageSize = paramVo.getPageSize();
-        sourceBuilder.from((pageNum -1)* pageSize);
+        sourceBuilder.from((pageNum - 1) * pageSize);
         sourceBuilder.size(pageSize);
 
         // 4. 构建高亮

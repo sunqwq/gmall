@@ -96,6 +96,10 @@ public class OrderListener {
         }
     }
 
+    /**
+     * 下单成功后 修改订单状态
+     * 订单状态1 【0->待付款；1->待发货；2->已发货；3->已完成；4->已关闭；5->无效订单】
+     */
     @RabbitListener(bindings = @QueueBinding(
             value = @Queue(value = "ORDER-SUCCESS-QUEUE",durable = "true"),
             exchange = @Exchange(value = "ORDER-EXCHANGE",ignoreDeclarationExceptions = "true",type = ExchangeTypes.TOPIC),

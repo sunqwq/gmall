@@ -52,8 +52,7 @@ public class SpuServiceImpl extends ServiceImpl<SpuMapper, SpuEntity> implements
     private GmallSmsClient smsClient;
     @Autowired
     private RabbitTemplate rabbitTemplate;
-    @Autowired
-    private SpuDescService spuDescService;
+
 
     @Override
     public PageResultVo queryPage(PageParamVo paramVo) {

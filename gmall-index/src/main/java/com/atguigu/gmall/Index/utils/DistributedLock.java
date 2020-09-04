@@ -56,15 +56,15 @@ public class DistributedLock {
     }
 
 
-    //续期
+    //续期 (测试成功)
     public void renewTime(String lockName, String uuid,Long expire) {
         String script = "if (redis.call('hexists', KEYS[1], ARGV[1]) == 1) " +
                 "then return redis.call('expire', KEYS[1], ARGV[2]) end;";
         this.thread = new Thread(() -> {
-            while (true) {
+            while (this.stringRedisTemplate.execute(new DefaultRedisScript<>(script,Boolean.class), Arrays.asList(lockName),uuid,expire.toString())) {
                 try {
                     Thread.sleep(expire * 1000 * 2 / 3);
-                    this.stringRedisTemplate.execute(new DefaultRedisScript<>(script,Long.class), Arrays.asList(lockName),uuid,expire.toString());
+
                 } catch (Exception e) {
                     e.printStackTrace();
                 }

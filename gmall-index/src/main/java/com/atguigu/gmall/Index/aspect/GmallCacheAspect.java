@@ -55,7 +55,7 @@ public class GmallCacheAspect {
      */
     @Around("@annotation(com.atguigu.gmall.Index.aspect.GmallCache)")
     public Object around(ProceedingJoinPoint joinPoint) throws Throwable{
-        //获取方法参数
+        //获取方法参数 ,数组的toString方法返回的是地址,没有可读性,所以后面 用集合
         Object[] args = joinPoint.getArgs();
         //获取方法签名
         MethodSignature signature = (MethodSignature) joinPoint.getSignature();
@@ -77,8 +77,9 @@ public class GmallCacheAspect {
         if (StringUtils.isNotBlank(json)) {
             return JSON.parseObject(json,returnType);
         }
-        // 2.加分布式锁  公平锁
-        RLock fairLock = this.redissonClient.getFairLock(lock + args);
+        // 2.加分布式锁  公平锁  (这里修改后,没有测试,如果失败,换用下一个)
+        RLock fairLock = this.redissonClient.getFairLock(lock + Arrays.asList(args));
+        //RLock fairLock = this.redissonClient.getFairLock(lock + args);
         fairLock.lock();
 
         // 3.查询缓存,如果命中直接反序列化返回

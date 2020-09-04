@@ -59,7 +59,7 @@ public class IndexService {
     7.集群情况下导致锁失效：RedLock
      */
 
-
+    //查询一级分类
     public List<CategoryEntity> queryLv1lCategories() {
         ResponseVo<List<CategoryEntity>> listResponseVo = this.pmsClient.queryCategoriesByPid(0l);
         List<CategoryEntity> categoryEntities = listResponseVo.getData();

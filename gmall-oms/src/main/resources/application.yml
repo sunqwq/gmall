@@ -36,7 +36,7 @@ spring:
     #消费者确认机制
     # manual-手动  auto-自动（无异常直接确认，有异常无限重试） none-不重试
     listener:
-      simple:
+      simple:  #额外开启一个线程消费   direct--和消费者共用一个线程
         acknowledge-mode: manual
         #能者多劳
         prefetch: 1

@@ -43,4 +43,12 @@ public class IndexController {
         return ResponseVo.ok();
     }
 
+    // 测试redis 实现自动续期 (测试成功)
+    @GetMapping("index/testLock2")
+    @ResponseBody
+    public ResponseVo<Object> testLock2() {
+        this.indexService.testLock2();
+        return ResponseVo.ok();
+    }
+
 }
