@@ -40,7 +40,8 @@ public class AttrController {
     * */
     @GetMapping("category/{cid}")
     public ResponseVo<List<AttrEntity>> queryAttrsByCid(
-            @PathVariable("cid") Long cid,
+            //@PathVariable("cid") Long cid,
+            @PathVariable(value = "cid",required = false) Long cid,
             @RequestParam(value = "type",required = false) Integer type,
             @RequestParam(value = "searchType",required = false) Integer searchType) {
 
