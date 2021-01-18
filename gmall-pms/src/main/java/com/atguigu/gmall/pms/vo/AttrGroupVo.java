@@ -9,7 +9,7 @@ import java.util.List;
 /**
  *  为了 查询分类下的组及规格参数
  *  扩展vo
- *  测试
+ *
  */
 @Data
 public class AttrGroupVo extends AttrGroupEntity {
